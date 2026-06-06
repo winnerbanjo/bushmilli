@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bushmilli-black-tee",
+    "name": "BushMilli Black Graphic Tee",
+    "price": 45000,
+    "category": "T-Shirts",
+    "image": "/images/bushmilli-black-front.jpeg",
+    "gallery": ["/images/bushmilli-black-front.jpeg", "/images/bushmilli-black-back.jpeg"],
+    "description": "Oversized black streetwear tee with BushMilli chest hit and full back artwork.",
+    "status": "New release",
+    "sizes": ["S", "M", "L", "XL"],
+    "featured": true
+  },
+  {
+    "id": "bushmilli-white-concept-tee",
+    "name": "BushMilli White Concept Tee",
+    "price": 45000,
+    "category": "T-Shirts",
+    "image": "/images/bushmilli-white-concept.jpeg",
+    "gallery": ["/images/bushmilli-white-concept.jpeg"],
+    "description": "White concept tee with red layered BushMilli artwork across the front and back.",
+    "status": "Concept drop",
+    "sizes": ["S", "M", "L", "XL"],
+    "featured": true
+  },
+  {
+    "id": "bushmilli-back-print-tee",
+    "name": "BushMilli Back Print Tee",
+    "price": 48000,
+    "category": "T-Shirts",
+    "image": "/images/bushmilli-black-back.jpeg",
+    "gallery": ["/images/bushmilli-black-back.jpeg", "/images/bushmilli-black-front.jpeg"],
+    "description": "Graphic-led black tee with large old-English BushMilli back print.",
+    "status": "Best seller",
+    "sizes": ["M", "L", "XL"],
+    "featured": false
+  }
+]
