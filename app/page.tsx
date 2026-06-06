@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, MessageCircle, Plus } from "lucide-react";
+import { Menu, Search, ShoppingBag, MessageCircle } from "lucide-react";
+import { AddToCartForm } from "@/components/AddToCartForm";
 import { formatNaira, getProducts } from "@/lib/products";
 import { policyPages, site } from "@/lib/site";
 
@@ -20,7 +21,7 @@ export default async function Home() {
           <Link className="icon-button hide-mobile" href="#shop" aria-label="Search">
             <Search size={23} />
           </Link>
-          <Link className="icon-button" href="#shop" aria-label="Cart">
+          <Link className="icon-button" href="/cart" aria-label="Cart">
             <ShoppingBag size={23} />
           </Link>
           <a
@@ -70,25 +71,17 @@ export default async function Home() {
           <div className="product-grid">
             {products.map((product) => (
               <article className="product-card" key={product.id}>
-                <div className="product-media">
+                <Link className="product-media" href={`/products/${product.id}`}>
                   <Image src={product.image} alt={product.name} width={900} height={1100} />
-                </div>
+                </Link>
                 <div className="product-info">
                   <span className="product-status">{product.status}</span>
-                  <h3>{product.name}</h3>
+                  <h3>
+                    <Link href={`/products/${product.id}`}>{product.name}</Link>
+                  </h3>
                   <div className="product-row">
                     <span className="price">{formatNaira(product.price)}</span>
-                    <a
-                      className="mini-button"
-                      href={`https://wa.me/${site.whatsappInternational}?text=${encodeURIComponent(
-                        `Hello BushMilli, I want to order ${product.name}.`
-                      )}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`Order ${product.name}`}
-                    >
-                      <Plus size={18} />
-                    </a>
+                    <AddToCartForm product={product} compact />
                   </div>
                 </div>
               </article>

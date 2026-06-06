@@ -5,8 +5,9 @@ import path from "path";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { clearAdminCookie, isAdmin, setAdminCookie, validateAdmin } from "@/lib/auth";
+import { getOrders, saveOrders } from "@/lib/orders";
 import { getProducts, saveProducts, slugify } from "@/lib/products";
-import { Product } from "@/lib/types";
+import { Order, Product } from "@/lib/types";
 
 export type LoginState = {
   error: string;
@@ -120,4 +121,18 @@ export async function deleteProductAction(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/bushmilli-studio");
   redirect("/bushmilli-studio?success=deleted");
+}
+
+export async function updateOrderStatusAction(formData: FormData) {
+  if (!(await isAdmin())) {
+    redirect("/bushmilli-studio/login");
+  }
+
+  const id = String(formData.get("id") ?? "");
+  const status = String(formData.get("status") ?? "Pending payment") as Order["status"];
+  const orders = await getOrders();
+
+  await saveOrders(orders.map((order) => (order.id === id ? { ...order, status } : order)));
+  revalidatePath("/bushmilli-studio");
+  redirect("/bushmilli-studio?success=order-updated");
 }

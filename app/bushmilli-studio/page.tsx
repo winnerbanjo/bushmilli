@@ -2,11 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/auth";
+import { getOrders } from "@/lib/orders";
 import { formatNaira, getProducts } from "@/lib/products";
 import {
   createProductAction,
   deleteProductAction,
   logoutAction,
+  updateOrderStatusAction,
   updateProductAction
 } from "./actions";
 
@@ -20,7 +22,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   }
 
   const params = await searchParams;
-  const products = await getProducts();
+  const [products, orders] = await Promise.all([getProducts(), getOrders()]);
 
   return (
     <main className="admin-shell">
@@ -42,6 +44,66 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
       {params.success ? <div className="notice">Product changes saved.</div> : null}
       {params.error ? <div className="error">Please check the product details and try again.</div> : null}
+
+      <section className="admin-panel">
+        <div className="section-header">
+          <h2>Orders</h2>
+        </div>
+        {orders.length ? (
+          <div className="admin-list">
+            {orders.map((order) => (
+              <details className="admin-panel" key={order.id}>
+                <summary className="admin-item order-admin-item">
+                  <span>
+                    <strong>{order.id}</strong>
+                    <br />
+                    {order.customer.name} - {order.customer.phone}
+                  </span>
+                  <span>{formatNaira(order.total)}</span>
+                  <span>{order.status}</span>
+                </summary>
+                <div className="order-admin-body">
+                  <p>
+                    <strong>Delivery:</strong> {order.deliveryMethod} - {order.customer.address}, {order.customer.city},{" "}
+                    {order.customer.state}
+                  </p>
+                  <p>
+                    <strong>Payment:</strong> {order.paymentMethod}
+                  </p>
+                  <p>
+                    <strong>Items:</strong>{" "}
+                    {order.items.map((item) => `${item.name} (${item.size}) x ${item.quantity}`).join(", ")}
+                  </p>
+                  {order.customer.notes ? (
+                    <p>
+                      <strong>Notes:</strong> {order.customer.notes}
+                    </p>
+                  ) : null}
+                </div>
+                <form className="status-form" action={updateOrderStatusAction}>
+                  <input type="hidden" name="id" value={order.id} />
+                  <label className="field">
+                    <span>Status</span>
+                    <select name="status" defaultValue={order.status}>
+                      <option>Pending payment</option>
+                      <option>Paid</option>
+                      <option>Processing</option>
+                      <option>Dispatched</option>
+                      <option>Completed</option>
+                      <option>Cancelled</option>
+                    </select>
+                  </label>
+                  <button className="button" type="submit">
+                    Update order
+                  </button>
+                </form>
+              </details>
+            ))}
+          </div>
+        ) : (
+          <p className="muted-copy">No orders yet.</p>
+        )}
+      </section>
 
       <section className="admin-panel">
         <div className="section-header">
