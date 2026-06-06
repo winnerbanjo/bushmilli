@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import { clearCartAction, updateCartAction } from "@/app/shop-actions";
+import { StoreFooter } from "@/components/StoreFooter";
+import { StoreHeader } from "@/components/StoreHeader";
 import { cartSubtotal, enrichCart, getCart } from "@/lib/cart";
 import { formatNaira, getProducts } from "@/lib/products";
 
@@ -11,16 +13,9 @@ export default async function CartPage() {
   const subtotal = cartSubtotal(lines);
 
   return (
-    <main className="checkout-shell">
-      <nav className="policy-nav">
-        <Link className="brand" href="/">
-          BushMilli
-        </Link>
-        <Link className="button" href="/checkout">
-          Checkout
-        </Link>
-      </nav>
-
+    <>
+      <StoreHeader />
+      <main className="checkout-shell">
       <section className="policy-hero">
         <span className="eyebrow">Your bag</span>
         <h1>Cart</h1>
@@ -80,6 +75,8 @@ export default async function CartPage() {
           </Link>
         </section>
       )}
-    </main>
+      </main>
+      <StoreFooter />
+    </>
   );
 }

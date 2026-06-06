@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCartForm } from "@/components/AddToCartForm";
+import { StoreFooter } from "@/components/StoreFooter";
+import { StoreHeader } from "@/components/StoreHeader";
 import { formatNaira, getProducts } from "@/lib/products";
 
 type ProductPageProps = {
@@ -38,16 +39,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <main className="product-shell">
-      <nav className="policy-nav">
-        <Link className="brand" href="/">
-          BushMilli
-        </Link>
-        <Link className="button" href="/cart">
-          Cart
-        </Link>
-      </nav>
-
+    <>
+      <StoreHeader />
+      <main className="product-shell">
       <section className="product-detail">
         <div className="product-gallery">
           {(product.gallery.length ? product.gallery : [product.image]).map((image) => (
@@ -67,6 +61,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+      <StoreFooter />
+    </>
   );
 }

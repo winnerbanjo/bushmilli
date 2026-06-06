@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, MessageCircle } from "lucide-react";
 import { AddToCartForm } from "@/components/AddToCartForm";
+import { StoreFooter } from "@/components/StoreFooter";
+import { StoreHeader } from "@/components/StoreHeader";
 import { formatNaira, getProducts } from "@/lib/products";
-import { policyPages, site } from "@/lib/site";
+import { site } from "@/lib/site";
 
 export default async function Home() {
   const products = await getProducts();
@@ -11,33 +12,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="top-strip">Lagos streetwear - WhatsApp orders available</div>
-      <nav className="nav">
-        <Link className="brand" href="/">
-          <Image src="/images/bushmilli-logo.jpeg" alt="BushMilli logo" width={88} height={88} />
-          <span>BushMilli</span>
-        </Link>
-        <div className="nav-actions">
-          <Link className="icon-button hide-mobile" href="#shop" aria-label="Search">
-            <Search size={23} />
-          </Link>
-          <Link className="icon-button" href="/cart" aria-label="Cart">
-            <ShoppingBag size={23} />
-          </Link>
-          <a
-            className="icon-button"
-            href={`https://wa.me/${site.whatsappInternational}`}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="WhatsApp"
-          >
-            <MessageCircle size={23} />
-          </a>
-          <button className="icon-button" aria-label="Menu">
-            <Menu size={27} />
-          </button>
-        </div>
-      </nav>
+      <StoreHeader />
 
       <main>
         <section className="hero">
@@ -129,22 +104,7 @@ export default async function Home() {
         </section>
       </main>
 
-      <footer className="footer">
-        <div>
-          <strong>BushMilli</strong>
-          <p>Premium graphic streetwear from Lagos, Nigeria.</p>
-        </div>
-        <div className="footer-links" aria-label="Store policies">
-          {policyPages.map((page) => (
-            <Link href={`/policies/${page.slug}`} key={page.slug}>
-              {page.title}
-            </Link>
-          ))}
-        </div>
-        <a className="button" href={`https://wa.me/${site.whatsappInternational}`} target="_blank" rel="noreferrer">
-          WhatsApp
-        </a>
-      </footer>
+      <StoreFooter />
     </>
   );
 }

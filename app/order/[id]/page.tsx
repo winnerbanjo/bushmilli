@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MessageCircle } from "lucide-react";
+import { StoreFooter } from "@/components/StoreFooter";
+import { StoreHeader } from "@/components/StoreHeader";
 import { getOrder } from "@/lib/orders";
 import { formatNaira } from "@/lib/products";
 import { site } from "@/lib/site";
@@ -23,16 +24,9 @@ export default async function OrderPage({ params }: OrderPageProps) {
   );
 
   return (
-    <main className="checkout-shell">
-      <nav className="policy-nav">
-        <Link className="brand" href="/">
-          BushMilli
-        </Link>
-        <Link className="button" href="/">
-          Store
-        </Link>
-      </nav>
-
+    <>
+      <StoreHeader />
+      <main className="checkout-shell">
       <section className="confirmation">
         <span className="eyebrow">Order received</span>
         <h1>{order.id}</h1>
@@ -77,6 +71,8 @@ export default async function OrderPage({ params }: OrderPageProps) {
           <strong>{formatNaira(order.total)}</strong>
         </div>
       </section>
-    </main>
+      </main>
+      <StoreFooter />
+    </>
   );
 }

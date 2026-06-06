@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import { StoreFooter } from "@/components/StoreFooter";
+import { StoreHeader } from "@/components/StoreHeader";
 import { getPolicy, policyPages, site } from "@/lib/site";
 
 type PolicyPageProps = {
@@ -34,17 +35,9 @@ export default async function PolicyPage({ params }: PolicyPageProps) {
   }
 
   return (
-    <main className="policy-shell">
-      <nav className="policy-nav">
-        <Link className="brand" href="/">
-          BushMilli
-        </Link>
-        <Link className="button" href="/">
-          <ArrowLeft size={16} />
-          Store
-        </Link>
-      </nav>
-
+    <>
+      <StoreHeader />
+      <main className="policy-shell">
       <section className="policy-hero">
         <span className="eyebrow">Store policy</span>
         <h1>{page.title}</h1>
@@ -72,6 +65,8 @@ export default async function PolicyPage({ params }: PolicyPageProps) {
           WhatsApp
         </a>
       </section>
-    </main>
+      </main>
+      <StoreFooter />
+    </>
   );
 }

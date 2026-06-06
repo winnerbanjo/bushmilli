@@ -6,6 +6,7 @@
   --red: #b61219;
   --acid: #00ff0a;
   --charcoal: #1f2422;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -21,6 +22,7 @@ body {
   color: var(--ink);
   background: var(--paper);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -45,15 +47,27 @@ button {
   color: white;
   display: flex;
   font-size: 12px;
+  gap: clamp(28px, 8vw, 120px);
   height: 34px;
   justify-content: center;
+  overflow: hidden;
   text-transform: uppercase;
+}
+
+.top-strip span {
+  animation: strip-pulse 4s var(--ease) infinite;
+  white-space: nowrap;
+}
+
+.top-strip span:nth-child(2) {
+  color: var(--acid);
 }
 
 .nav {
   align-items: center;
   background: white;
   border-bottom: 1px solid var(--line);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   display: flex;
   gap: 24px;
   height: 92px;
@@ -61,7 +75,12 @@ button {
   padding: 0 clamp(18px, 4vw, 58px);
   position: sticky;
   top: 0;
+  transition: box-shadow 0.25s ease, transform 0.35s var(--ease);
   z-index: 20;
+}
+
+.nav:hover {
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
 }
 
 .brand {
@@ -79,7 +98,12 @@ button {
   border-radius: 50%;
   height: 44px;
   object-fit: cover;
+  transition: transform 0.45s var(--ease);
   width: 44px;
+}
+
+.brand:hover img {
+  transform: rotate(-8deg) scale(1.08);
 }
 
 .nav-actions {
@@ -97,7 +121,32 @@ button {
   height: 42px;
   justify-content: center;
   position: relative;
+  transition: color 0.2s ease, transform 0.25s var(--ease);
   width: 42px;
+}
+
+.icon-button:hover {
+  color: var(--red);
+  transform: translateY(-2px);
+}
+
+.cart-count {
+  align-items: center;
+  animation: pop-in 0.35s var(--ease);
+  background: var(--acid);
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  color: var(--ink);
+  display: flex;
+  font-size: 10px;
+  font-weight: 900;
+  height: 18px;
+  justify-content: center;
+  line-height: 1;
+  position: absolute;
+  right: 2px;
+  top: 3px;
+  width: 18px;
 }
 
 .icon-button:hover::after {
@@ -122,6 +171,7 @@ button {
 }
 
 .hero img {
+  animation: hero-drift 14s var(--ease) infinite alternate;
   filter: contrast(1.08);
   height: 100%;
   object-fit: cover;
@@ -137,6 +187,7 @@ button {
 }
 
 .hero-content {
+  animation: rise-in 0.8s var(--ease) both;
   align-self: center;
   color: white;
   max-width: 620px;
@@ -187,11 +238,14 @@ h1 {
   min-height: 48px;
   padding: 0 22px;
   text-transform: uppercase;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s var(--ease);
 }
 
 .button:hover {
   background: var(--red);
   border-color: var(--red);
+  box-shadow: 0 12px 28px rgba(182, 18, 25, 0.22);
+  transform: translateY(-2px);
 }
 
 .button.acid {
@@ -235,8 +289,28 @@ h1 {
 }
 
 .product-card {
+  animation: rise-in 0.65s var(--ease) both;
   background: white;
   border: 1px solid var(--line);
+  transition: border-color 0.2s ease, box-shadow 0.3s ease, transform 0.3s var(--ease);
+}
+
+.product-card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.product-card:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.product-card:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.product-card:hover {
+  border-color: rgba(182, 18, 25, 0.45);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
 }
 
 .product-media {
@@ -249,12 +323,13 @@ h1 {
 .product-media img {
   height: 100%;
   object-fit: cover;
-  transition: transform 0.28s ease;
+  transition: transform 0.55s var(--ease), filter 0.3s ease;
   width: 100%;
 }
 
 .product-card:hover .product-media img {
-  transform: scale(1.04);
+  filter: saturate(1.08) contrast(1.06);
+  transform: scale(1.07);
 }
 
 .product-info {
@@ -295,7 +370,13 @@ h1 {
   display: inline-flex;
   height: 38px;
   justify-content: center;
+  transition: background 0.2s ease, transform 0.22s var(--ease);
   width: 42px;
+}
+
+.mini-button:hover {
+  background: var(--red);
+  transform: rotate(-4deg) scale(1.05);
 }
 
 .sr-only {
@@ -320,6 +401,12 @@ h1 {
   height: 38px;
   min-width: 62px;
   padding: 0 8px;
+  transition: border-color 0.2s ease;
+}
+
+.quick-cart-form select:focus {
+  border-color: var(--red);
+  outline: 0;
 }
 
 .cart-form {
@@ -343,6 +430,7 @@ h1 {
   display: grid;
   gap: 28px;
   grid-template-columns: 1.05fr 0.95fr;
+  overflow: hidden;
 }
 
 .feature-band img {
@@ -350,7 +438,12 @@ h1 {
   height: 100%;
   max-height: 620px;
   object-fit: cover;
+  transition: transform 0.65s var(--ease);
   width: 100%;
+}
+
+.feature-band:hover img {
+  transform: scale(1.04);
 }
 
 .feature-copy {
@@ -439,6 +532,7 @@ h1 {
 }
 
 .policy-hero {
+  animation: rise-in 0.65s var(--ease) both;
   padding: clamp(46px, 8vw, 94px) 0 34px;
 }
 
@@ -526,13 +620,19 @@ h1 {
 }
 
 .product-gallery img {
+  animation: rise-in 0.65s var(--ease) both;
   aspect-ratio: 4 / 5;
   background: #e7e4dd;
   object-fit: cover;
   width: 100%;
 }
 
+.product-gallery img:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
 .product-buybox {
+  animation: slide-in-right 0.7s var(--ease) both;
   align-self: start;
   background: white;
   border: 1px solid var(--line);
@@ -580,6 +680,7 @@ h1 {
 }
 
 .cart-line {
+  animation: rise-in 0.55s var(--ease) both;
   align-items: center;
   background: white;
   border: 1px solid var(--line);
@@ -620,6 +721,7 @@ h1 {
 }
 
 .order-summary {
+  animation: slide-in-right 0.65s var(--ease) both;
   background: white;
   border: 1px solid var(--line);
   display: grid;
@@ -679,6 +781,7 @@ h1 {
 .empty-state,
 .confirmation {
   align-items: start;
+  animation: rise-in 0.65s var(--ease) both;
   background: white;
   border: 1px solid var(--line);
   display: grid;
@@ -692,9 +795,65 @@ h1 {
 }
 
 .checkout-form {
+  animation: rise-in 0.65s var(--ease) both;
   background: white;
   border: 1px solid var(--line);
   padding: 20px;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06) translate3d(1.5%, -1%, 0);
+  }
+}
+
+@keyframes strip-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.35);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 .payment-box {
@@ -824,10 +983,41 @@ h1 {
 @media (max-width: 780px) {
   .nav {
     height: 76px;
+    padding: 0 14px;
   }
 
   .nav .hide-mobile {
     display: none;
+  }
+
+  .top-strip {
+    font-size: 10px;
+    gap: 28px;
+    justify-content: flex-start;
+    padding: 0 14px;
+  }
+
+  .top-strip span:nth-child(3) {
+    display: none;
+  }
+
+  .brand {
+    gap: 8px;
+    font-size: clamp(22px, 7vw, 30px);
+  }
+
+  .brand img {
+    height: 38px;
+    width: 38px;
+  }
+
+  .nav-actions {
+    gap: 2px;
+  }
+
+  .icon-button {
+    height: 38px;
+    width: 38px;
   }
 
   .hero {
@@ -842,7 +1032,6 @@ h1 {
     align-self: end;
   }
 
-  .product-grid,
   .feature-band,
   .info-grid,
   .product-detail,
@@ -854,6 +1043,60 @@ h1 {
   .admin-grid,
   .footer {
     grid-template-columns: 1fr;
+  }
+
+  .product-grid {
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-info {
+    gap: 7px;
+    padding: 10px;
+  }
+
+  .product-status {
+    font-size: 9px;
+  }
+
+  .product-info h3 {
+    font-size: 13px;
+    line-height: 1.25;
+    min-height: 48px;
+  }
+
+  .product-row {
+    gap: 6px;
+  }
+
+  .price {
+    font-size: 12px;
+  }
+
+  .quick-cart-form {
+    gap: 5px;
+  }
+
+  .quick-cart-form select {
+    font-size: 12px;
+    height: 34px;
+    min-width: 48px;
+    padding: 0 4px;
+  }
+
+  .mini-button {
+    height: 34px;
+    width: 34px;
+  }
+
+  .section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .footer {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .policy-contact {
@@ -874,6 +1117,10 @@ h1 {
     position: static;
   }
 
+  .product-buybox {
+    position: static;
+  }
+
   .section-header {
     align-items: start;
     flex-direction: column;
@@ -886,5 +1133,16 @@ h1 {
 
   .admin-item form {
     grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

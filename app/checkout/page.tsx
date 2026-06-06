@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { placeOrderAction } from "@/app/shop-actions";
+import { StoreFooter } from "@/components/StoreFooter";
+import { StoreHeader } from "@/components/StoreHeader";
 import { cartSubtotal, enrichCart, getCart } from "@/lib/cart";
 import { formatNaira, getProducts } from "@/lib/products";
 import { site } from "@/lib/site";
@@ -22,16 +23,9 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
   const defaultDelivery = 3000;
 
   return (
-    <main className="checkout-shell">
-      <nav className="policy-nav">
-        <Link className="brand" href="/">
-          BushMilli
-        </Link>
-        <Link className="button" href="/cart">
-          Cart
-        </Link>
-      </nav>
-
+    <>
+      <StoreHeader />
+      <main className="checkout-shell">
       <section className="policy-hero">
         <span className="eyebrow">Secure checkout</span>
         <h1>Checkout</h1>
@@ -128,6 +122,8 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
           </div>
         </aside>
       </div>
-    </main>
+      </main>
+      <StoreFooter />
+    </>
   );
 }
